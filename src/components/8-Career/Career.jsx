@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import './Career.css';
 
 const Career = () => {
@@ -26,21 +25,12 @@ const Career = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     
     try {
-      // Test server reachability
-      try {
-        await axios.get('http://localhost:8080/api/test');
-      } catch (error) {
-        setError('Unable to reach the server. Please check your internet connection.');
-        setLoading(false);
-        return;
-      }
-
       // Validate file
       if (!formData.resume) {
         throw new Error('Please upload your resume');
@@ -54,34 +44,14 @@ const Career = () => {
         throw new Error('File size should not exceed 5MB');
       }
 
-      const formDataToSend = new FormData();
-      
-      // Add all form fields to FormData
-      Object.keys(formData).forEach(key => {
-        if (key === 'resume') {
-          formDataToSend.append(key, formData[key], formData[key].name);
-        } else {
-          formDataToSend.append(key, formData[key]);
-        }
+      // Simulate form submission
+      console.log('Form Data:', {
+        ...formData,
+        resume: formData.resume.name
       });
 
-      console.log('Submitting application...');
-      
-      const response = await axios.post('http://localhost:8080/api/careers', formDataToSend, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        timeout: 10000, // 10 second timeout
-        onUploadProgress: (progressEvent) => {
-          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          console.log('Upload progress:', percentCompleted);
-        }
-      });
-
-      console.log('Application submitted successfully:', response.data);
-
+      // Show success message
       setShowSuccess(true);
-      setTimeout(() => setShowSuccess(false), 5000);
       
       // Reset form
       setFormData({
@@ -99,19 +69,11 @@ const Career = () => {
       const fileInput = document.querySelector('input[type="file"]');
       if (fileInput) fileInput.value = '';
 
+      // Hide success message after 5 seconds
+      setTimeout(() => setShowSuccess(false), 5000);
+
     } catch (error) {
-      console.error('Error submitting application:', error);
-      
-      if (error.response) {
-        // Server responded with an error
-        setError(error.response.data.message || 'Failed to submit application');
-      } else if (error.request) {
-        // Request was made but no response received
-        setError('Unable to reach the server. Please check your internet connection and try again.');
-      } else {
-        // Error in request setup
-        setError(error.message || 'Failed to submit application');
-      }
+      setError(error.message || 'Failed to submit application');
     } finally {
       setLoading(false);
     }
@@ -268,7 +230,8 @@ const Career = () => {
 
           {showSuccess && (
             <div className="success-message show">
-              Thank you for your application! We will review it and get back to you soon.
+              <h3>Thank you for your application!</h3>
+              <p>We will review it and get back to you soon.</p>
             </div>
           )}
         </form>

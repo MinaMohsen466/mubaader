@@ -42,8 +42,10 @@ const GetStart = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you would typically send the data to your backend
-    console.log('Form submitted:', formData);
+    // Simulate form submission
+    console.log('Consultation Request:', formData);
+    
+    // Show success message and reset form
     setShowSuccess(true);
     setFormData({
       name: '',
@@ -52,6 +54,8 @@ const GetStart = () => {
       service: '',
       message: ''
     });
+    
+    // Hide success message after 5 seconds
     setTimeout(() => setShowSuccess(false), 5000);
   };
 
