@@ -1,0 +1,57 @@
+.banner {
+    width: 100%;
+    height: 100vh;
+    margin: 1rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.banner img {
+    width: 85%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Tablet Screens */
+@media screen and (max-width: 1024px) {
+    .banner {
+        height: 80vh;
+        margin: 0.5rem auto;
+    }
+    
+    .banner img {
+        width: 90%;
+    }
+}
+
+/* Medium Screens */
+@media screen and (max-width: 768px) {
+    .banner {
+        height: 70vh;
+    }
+    
+    .banner img {
+        width: 95%;
+    }
+}
+
+/* Mobile Screens */
+@media screen and (max-width: 480px) {
+    .banner {
+        height: 50vh;
+        margin: 0.25rem auto;
+    }
+    
+    .banner img {
+        width: 100%;
+    }
+}
+
+/* Small Mobile Screens */
+@media screen and (max-width: 320px) {
+    .banner {
+        height: 40vh;
+    }
+}
